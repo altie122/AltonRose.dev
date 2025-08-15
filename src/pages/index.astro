@@ -1,11 +1,101 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "@/layouts/Layout.astro";
+import * as Card from "@/components/ui/card";
+import { ProjectCard } from "@/components/project-card"
+import { projects, shuffleArray } from "@/lib";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const randomProjects = shuffleArray(projects).slice(0, 2);
 ---
 
 <Layout>
-	<Welcome />
+  <section
+    class='flex flex-col items-center justify-center min-h-screen min-w-screen'
+  >
+    <h1 class='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
+      Hello, I'm Alton Rose!
+    </h1>
+    <p class='text-xs'>Also known as altie122 online.</p>
+    <p>I'm a Senior in High School who is trying to make cool stuff!</p>
+  </section>
+  <section class='min-h-screen min-w-screen p-4'>
+    <h1 class='prose-h1'>About Me</h1>
+    <div class='flex flex-col md:flex-row gap-2'>
+      <div class='w-full'>
+        <p>
+          I'm a teenager who is trying to learn as much about development of all
+          kinds as I can.
+        </p>
+        <p>
+          Currently I consider myself proficient in the following technologies:
+        </p>
+        <Card.Card className='w-fit ml-4'>
+          <Card.CardContent>
+            <ul class='list-disc list-inside'>
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>Typescript/JavaScript</li>
+              <li>React (including React Native using Expo)</li>
+              <li>Python</li>
+            </ul>
+            <h2 class='prose-h2-noborder'>Web Frameworks:</h2>
+            <ul class='list-disc list-inside'>
+              <li>Astro</li>
+              <li>NextJS</li>
+            </ul>
+          </Card.CardContent>
+        </Card.Card>
+        <p>I'm currently learning the following:</p>
+        <Card.Card className='w-fit ml-4'>
+          <Card.CardContent>
+            <ul class='list-disc list-inside'>
+              <li>Lua(u)</li>
+              <li>Rust</li>
+              <li>Java</li>
+              <li>C++</li>
+              <li>C#</li>
+            </ul>
+          </Card.CardContent>
+        </Card.Card>
+      </div>
+      <div class='w-full'>
+        <h2 class='prose-h2-noborder'>What I do other than programming.</h2>
+        <p>
+          Along with programming I play video games, streaming (on twitch under
+          the name <em
+            ><a href='https://twitch.tv/altie122' class='prose-a'>altie122</a
+            ></em
+          >), and a few other things that are less significant to me.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class='min-h-screen min-w-screen p-4'>
+    <h1 class='text-4xl font-bold'>Projects</h1>
+    <p>
+      I've made a few projects, some of which are listed below:
+    </p>
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
+      {
+        projects.map((project) => (
+          <ProjectCard project={project} client:only />
+        ))
+      }
+    </div>
+    <p>
+      You can view all of my projects on my <a
+        href='/portfolio'
+        class='prose-a'>portfolio page</a
+      >.
+    </p>
+  </section>
+  <!-- <section className="min-h-screen min-w-screen p-4">
+    <h1 className="text-4xl font-bold">Blog</h1>
+    <p>I try to write blog posts every now and then, here are a few of my most recent ones:</p>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      {blogPosts.map((post) => (
+        <h1>{post.title}</h1>
+      ))}
+    </div>
+    <p>You can view all of my blog posts on my <a href="/blog" className="no-underline hover:underline">blog page</a>.</p>
+  </section> -->
 </Layout>
