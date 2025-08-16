@@ -3,6 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib";
 import { motion, type HTMLMotionProps } from "motion/react";
 import { useRef, useState } from "react";
+import { useReducedMotionState } from "../reduced-motion-dialog";
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -17,7 +18,8 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function LinkedCard({ className, ...props }: HTMLMotionProps<"a">) {
+function LinkedCard({ className, ...props }: React.ComponentProps<"a">) {
+  const [prefersReducedMotion] = useReducedMotionState();
   const cardRef = useRef<HTMLAnchorElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
@@ -39,11 +41,28 @@ function LinkedCard({ className, ...props }: HTMLMotionProps<"a">) {
     setTilt({ x: 0, y: 0 });
   };
 
+  if (
+    prefersReducedMotion === "less-motion" ||
+    prefersReducedMotion === "no-motion" ||
+    prefersReducedMotion === "no-motion-unchecked"
+  ) {
+    return (
+      <a
+        data-slot='card'
+        {...props}
+        className={cn(
+          "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300",
+          className
+        )}
+      />
+    );
+  }
+
   return (
     <motion.a
       ref={cardRef}
       data-slot='card'
-      {...props}
+      {...(props as HTMLMotionProps<"a">)}
       className={cn(
         "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300",
         className

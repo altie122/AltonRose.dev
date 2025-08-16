@@ -1,6 +1,16 @@
 ---
 import "@/styles/global.css";
 import { CursorGlow } from "@/components/cursor-glow";
+import { ColorCycler } from "@/components/cursor-glow-cycler";
+import {
+  ReducedMotionDialog,
+  ReducedMotionProvider,
+} from "@/components/reduced-motion-dialog";
+interface Props {
+  glowColor?: string;
+}
+
+const { glowColor } = Astro.props;
 ---
 
 <script is:inline>
@@ -35,14 +45,23 @@ import { CursorGlow } from "@/components/cursor-glow";
     <meta name='generator' content={Astro.generator} />
     <title>AltonRose.dev</title>
   </head>
-  <body>
-    <div class='relative z-20'><slot /></div>
-    <div class='fixed inset-0 z-0'>
-      <CursorGlow client:only />
-    </div>
-    <div
-      class="fixed inset-0 z-10 bg-[url('/BackgroundLight.svg')] dark:bg-[url('/Background.svg')] bg-repeat bg-fixed pointer-events-none bg-size-[200px] backdrop-blur-xl h-full"
-    >
-    </div>
-  </body>
+  <ReducedMotionProvider client:only>
+    <body class='max-w-dvw overflow-x-hidden'>
+      <div class='relative z-20'>
+        <slot /><ReducedMotionDialog client:only />
+      </div>
+      <div class='fixed inset-0 z-0'>
+        <CursorGlow client:only glowColor={glowColor} />
+        {
+          !glowColor && glowColor != "var(--cursorGlow)" && (
+            <ColorCycler client:only />
+          )
+        }
+      </div>
+      <div
+        class="fixed inset-0 z-10 bg-[url('/BackgroundLight.svg')] dark:bg-[url('/Background.svg')] bg-repeat bg-fixed pointer-events-none bg-size-[200px] backdrop-blur-xl h-full"
+      >
+      </div>
+    </body>
+  </ReducedMotionProvider>
 </html>

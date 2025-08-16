@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, type CSSProperties } from "react";
 import { useMousePosition } from "@/hooks/use-mouse-position";
+import { useReducedMotionState } from "./reduced-motion-dialog";
 
 interface CursorGlowProps {
   glowColor?: string;
@@ -10,11 +11,12 @@ interface CursorGlowProps {
 }
 
 export function CursorGlow({
-  glowColor = "rgba(255, 0, 0, 0.4)",
+  glowColor = "var(--cursorGlow)",
   glowSize = "200px",
   blurAmount = "100px",
   lerpFactor = 0.1, // A value between 0 and 1. Lower means slower/more lag.
 }: CursorGlowProps) {
+  const [prefersReducedMotion] = useReducedMotionState();
   const { x: mouseX, y: mouseY } = useMousePosition();
   const [currentGlowX, setCurrentGlowX] = useState(0);
   const [currentGlowY, setCurrentGlowY] = useState(0);
@@ -50,6 +52,14 @@ export function CursorGlow({
       cancelAnimationFrame(animationFrameId);
     };
   }, [mouseX, mouseY, lerpFactor, glowSize, currentGlowX, currentGlowY]);
+
+  if (prefersReducedMotion === "no-motion" || prefersReducedMotion === "no-motion-unchecked") {
+    return;
+  }
+
+  if (prefersReducedMotion === "less-motion") {
+    glowColor = "rgba(255, 0, 0, 0.5)"
+  }
 
   const glowStyle: CSSProperties = {
     backgroundColor: glowColor,
