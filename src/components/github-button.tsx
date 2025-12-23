@@ -1,7 +1,6 @@
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { Star } from "lucide-react"
-// @ts-expect-error Waiting for @types packages to be mergeable
 import abbreviate from "number-abbreviate";
 
 export default function GithubButton({

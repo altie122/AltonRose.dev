@@ -6,8 +6,7 @@ import type { githubStatsType, projectsType } from "@/lib";
 import { Badge } from "./ui/badge";
 import GithubButton from "./github-button";
 
-export function ProjectCard({ project }: { project: projectsType }) {
-  // Use a more descriptive state for loading/data/error
+export function ProjectCard({ project, from }: { project: projectsType, from: string }) {
   const [githubDataState, setGithubDataState] = useState<
     { status: "idle" } | { status: "loading" } | { status: "success"; data: githubStatsType } | { status: "error" }
   >(
@@ -36,7 +35,7 @@ export function ProjectCard({ project }: { project: projectsType }) {
   const showOpenSourceBadge = githubDataState.status === "success" || githubDataState.status === "loading";
 
   return (
-    <Card.LinkedCard href={`/portfolio/${project.id}`}>
+    <Card.LinkedCard href={`/portfolio/${project.id}${from && `/${from}`}`}>
       <Card.CardHeader>
         <Card.CardTitle className='flex flex-row justify-between gap-2'>
           <div className='flex flex-row gap-2'>
@@ -60,9 +59,14 @@ export function ProjectCard({ project }: { project: projectsType }) {
       </Card.CardHeader>
       <Card.CardContent>
         <img
-          src={project.imageURL}
+          src={typeof project.imageURL === "string" ? project.imageURL : project.imageURL.light}
           alt={project.title}
-          className='w-full h-auto object-cover rounded-lg'
+          className='w-full h-auto object-cover rounded-lg block dark:hidden'
+        />
+        <img
+          src={typeof project.imageURL === "string" ? project.imageURL : project.imageURL.dark}
+          alt={project.title}
+          className='w-full h-auto object-cover rounded-lg hidden dark:block'
         />
       </Card.CardContent>
     </Card.LinkedCard>

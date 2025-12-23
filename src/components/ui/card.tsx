@@ -10,7 +10,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot='card'
       className={cn(
-        "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm",
+        "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm bg-card/10",
         className
       )}
       {...props}
@@ -20,7 +20,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
 
 function LinkedCard({ className, ...props }: React.ComponentProps<"a">) {
   const [prefersReducedMotion] = useReducedMotionState();
-  const cardRef = useRef<HTMLAnchorElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -51,7 +51,7 @@ function LinkedCard({ className, ...props }: React.ComponentProps<"a">) {
         data-slot='card'
         {...props}
         className={cn(
-          "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300",
+          "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300 bg-card/10",
           className
         )}
       />
@@ -59,21 +59,22 @@ function LinkedCard({ className, ...props }: React.ComponentProps<"a">) {
   }
 
   return (
-    <motion.a
-      ref={cardRef}
-      data-slot='card'
-      {...(props as HTMLMotionProps<"a">)}
-      className={cn(
-        "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300",
-        className
-      )}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        transition: "transform 0.1s ease-out",
-      }}
-    />
+    <div ref={cardRef}>
+      <motion.a
+        data-slot='card'
+        {...(props as HTMLMotionProps<"a">)}
+        className={cn(
+          "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300 bg-card/10",
+          className
+        )}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transition: "transform 0.1s ease-out",
+        }}
+      />
+    </div>
   );
 }
 

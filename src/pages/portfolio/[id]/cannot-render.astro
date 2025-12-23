@@ -1,0 +1,30 @@
+---
+import { projects } from "@/lib";
+import "@/styles/global.css";
+
+const { id } = Astro.params;
+
+if (!id || !parseInt(id)) {
+  return Astro.redirect("/404");
+}
+
+const project = projects.find((project) => project.id === parseInt(id));
+if (!project) {
+  return Astro.redirect("/404");
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cannot render</title>
+  </head>
+  <body class="bg-black text-white flex flex-col items-center justify-center h-screen w-screen">
+    <h1 class="text-3xl font-bold">Cannot render embed</h1>
+    <p>The project you are trying to view is not embeddable.</p>
+    <p>Reason: "{project.allowEmbedded}"</p>
+    <p>Please click "Visit in new tab" to view the project. or click <a href={project.url} target="_blank" rel="noreferrer" class="prose-a">here</a> to view it in a new tab.</p>
+  </body>
+</html>

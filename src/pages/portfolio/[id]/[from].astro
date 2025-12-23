@@ -1,0 +1,60 @@
+---
+import { Button } from "@/components/ui/button";
+import Layout from "@/layouts/Layout.astro";
+import { projects } from "@/lib";
+
+const { id, from } = Astro.params;
+
+if (!id || !parseInt(id)) {
+  return Astro.rewrite("/404");
+}
+
+const project = projects.find((project) => project.id === parseInt(id));
+if (!project) {
+  return Astro.rewrite("/404");
+}
+
+const sources = {
+  "home": "/",
+  "portfolio": "/portfolio",
+}
+
+const sourcesMap = new Map(Object.entries(sources));
+
+
+if (!from || !sourcesMap.keys().toArray().includes(from)) {
+  return Astro.rewrite(`/portfolio/${id}`);
+}
+---
+
+<Layout>
+  <div class='flex flex-col h-screen w-screen items-center justify-center'>
+    <div class='flex flex-row w-full px-5 pt-5 justify-between'>
+      {
+        from && sourcesMap.keys().toArray().includes(from) && (
+          <Button asChild>
+            <a href={sourcesMap.get(from)}>
+              <h2 class='text-xl font-bold'>Back</h2>
+            </a>
+          </Button>
+        )
+      }
+      <Button asChild>
+        <a
+          href={project.url}
+          target='_blank'
+          rel='noreferrer'
+        >
+          <h2>Visit in new tab</h2>
+        </a>
+      </Button>
+    </div>
+    <div class='flex-grow flex items-center justify-center w-full h-full p-5'>
+      <iframe
+        title={project.title}
+        src={typeof project.allowEmbedded !== "string" ? project.url : `/portfolio/${id}/cannot-render`}
+        class='border-2 border-gray-700 rounded-lg w-full h-full bg-white'
+      ></iframe>
+    </div>
+  </div>
+</Layout>
