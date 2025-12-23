@@ -10,7 +10,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot='card'
       className={cn(
-        "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm bg-card/10",
+        "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300 bg-black/10 shadow-xl",
         className
       )}
       {...props}
@@ -51,7 +51,7 @@ function LinkedCard({ className, ...props }: React.ComponentProps<"a">) {
         data-slot='card'
         {...props}
         className={cn(
-          "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300 bg-card/10",
+          "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300 bg-black/10 shadow-xl",
           className
         )}
       />
@@ -64,7 +64,7 @@ function LinkedCard({ className, ...props }: React.ComponentProps<"a">) {
         data-slot='card'
         {...(props as HTMLMotionProps<"a">)}
         className={cn(
-          "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300 bg-card/10",
+          "text-card-foreground flex flex-col gap-6 rounded-xl border p-4 backdrop-blur-sm transition-colors duration-300 bg-black/10 shadow-xl",
           className
         )}
         onMouseMove={handleMouseMove}

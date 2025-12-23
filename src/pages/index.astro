@@ -3,21 +3,23 @@ import Layout from "@/layouts/Layout.astro";
 import * as Card from "@/components/ui/card";
 import { ProjectCard } from "@/components/project-card";
 import { projects, shuffleArray } from "@/lib";
+import FirefoxNotice from "@/components/firefox-notice";
 
 const randomProjects = shuffleArray(projects).slice(0, 2);
 ---
 
 <Layout>
   <section
-    class='flex flex-col items-center justify-center min-h-screen w-screen'
+    class='flex flex-col items-center justify-center min-h-screen w-full'
   >
     <h1 class='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
       Hello, I'm Alton Rose!
     </h1>
     <p class='text-xs'>Also known as altie122 online.</p>
     <p>I'm a Senior in High School who is trying to make cool stuff!</p>
+    <FirefoxNotice client:only="react" />
   </section>
-  <section class='min-h-screen w-screen p-4'>
+  <section class='min-h-screen w-full p-4'>
     <h1 class='prose-h1'>About Me</h1>
     <div class='flex flex-col md:flex-row gap-4'>
       <div class='w-full'>
@@ -94,7 +96,7 @@ const randomProjects = shuffleArray(projects).slice(0, 2);
       </div>
     </div>
   </section>
-  <section class='min-h-screen w-screen p-4 overflow-x-hidden'>
+  <section class='min-h-screen w-full p-4 overflow-x-hidden'>
     <h1 class='text-4xl font-bold'>Projects</h1>
     <p>I've made a few projects, some of which are listed below:</p>
     <div class='grid grid-cols-1 lg:grid-cols-2 gap-2 p-2'>
@@ -116,7 +118,7 @@ const randomProjects = shuffleArray(projects).slice(0, 2);
       )
     }
   </section>
-  <!-- <section className="min-h-screen min-w-screen p-4">
+  <!-- <section className="min-h-screen min-w-full p-4">
     <h1 className="text-4xl font-bold">Blog</h1>
     <p>I try to write blog posts every now and then, here are a few of my most recent ones:</p>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
