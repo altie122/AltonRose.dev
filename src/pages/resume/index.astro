@@ -1,0 +1,31 @@
+---
+import "@/styles/global.css"
+import { getEntry, render } from "astro:content";
+
+const entry = await getEntry("resume", "resume");
+
+if (!entry) {
+  return new Response("Not found", {
+    status: 404,
+    headers: { "content-type": "text/plain" },
+  });
+}
+const { Content } = await render(entry);
+---
+
+<main class='w-full lg:w-1/2 mx-auto border-2 border-black mt-2 **:border-black'>
+  <div class='flex flex-col items-center p-2 bg-red-100'>
+    <h1 class='text-4xl font-bold pb-2'>Alton Rose</h1>
+    <p>
+      Email: <a href={`mailto:${entry.data.email}`} class='prose-a'
+        >{entry.data.email}</a
+      >
+    </p>
+    <p>Phone: {entry.data.phone}</p>
+    <p>Location: {entry.data.location}</p>
+  </div>
+  <hr class='border-2 border-black' />
+  <div class='prose-no-container'>
+    <Content />
+  </div>
+</main>

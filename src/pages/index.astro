@@ -4,7 +4,17 @@ import * as Card from "@/components/ui/card";
 import { ProjectCard } from "@/components/project-card";
 import { projects, shuffleArray } from "@/lib";
 import FirefoxNotice from "@/components/firefox-notice";
+import { getEntry, render } from "astro:content";
 
+const entry = await getEntry("resume", "resume");
+
+if (!entry) {
+  return new Response("Not found", {
+    status: 404,
+    headers: { "content-type": "text/plain" },
+  });
+}
+const { Content } = await render(entry);
 const randomProjects = shuffleArray(projects).slice(0, 2);
 ---
 
@@ -136,4 +146,31 @@ const randomProjects = shuffleArray(projects).slice(0, 2);
     </div>
     <p>You can view all of my blog posts on my <a href="/blog" className="no-underline hover:underline">blog page</a>.</p>
   </section> -->
+  <section class="min-h-screen min-w-full p-4">
+    <h1 class="text-4xl font-bold">Resume</h1>
+      <main class='w-full lg:w-1/2 mx-auto border-2 border-border bg-black mt-2'>
+    <div class='flex flex-col items-center p-2'>
+      <h1 class='text-4xl font-bold pb-2'>Alton Rose</h1>
+      <p>
+        Email: <a href={`mailto:${entry.data.email}`} class='prose-a'
+          >{entry.data.email}</a
+        >
+      </p>
+      <p>Phone: {entry.data.phone}</p>
+      <p>Location: {entry.data.location}</p>
+    </div>
+    <hr class='border-2 border-border' />
+    <div class='prose-no-container'>
+      <Content />
+    </div>
+  </main>
+  <div class='p-2 flex justify-center'>
+    <p>
+      A Printable PDF of my resume can be found: <a
+        href='/resume/print.pdf'
+        class='prose-a'>here</a
+      >.
+    </p>
+  </div>
+  </section>
 </Layout>

@@ -8,16 +8,31 @@ import vercel from "@astrojs/vercel";
 
 import db from "@astrojs/db";
 
+import pdf from "astro-pdf";
+
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
   site: "https://altonrose.dev",
-
+  server: {
+    allowedHosts: ["astrodev.altonrose.dev"],
+  },
   vite: {
     plugins: [tailwindcss()],
   },
-
-  integrations: [react(), sitemap(), mdx(), db()],
+  integrations: [
+    react(),
+    sitemap({
+      filter: (pathname) => pathname !== "/resume/",
+    }),
+    mdx(),
+    db(),
+    pdf({
+      pages: {
+        "/resume/": "/resume.pdf",
+      },
+    }),
+  ],
   adapter: vercel(),
   output: "server",
 });
