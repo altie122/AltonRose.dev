@@ -1,21 +1,28 @@
 // 1. Import utilities from `astro:content`
-import { defineCollection } from "astro:content";
+import {defineCollection} from 'astro:content';
 
 // 2. Import loader(s)
-import { glob, file } from "astro/loaders";
+import {glob, file} from 'astro/loaders';
 
 // 3. Import Zod
-import { z } from "astro/zod";
+import {z} from 'astro/zod';
 
 // 4. Define a `loader` and `schema` for each collection
 const resume = defineCollection({
-  loader: glob({ pattern: "resume.mdx", "base": "./src/content/resumes" }),
-  schema: z.object({
-    email: z.string(),
-    phone: z.string(),
-    location: z.string(),
-  }),
+    loader: glob({pattern: 'resume.mdx', base: './src/content/resumes'}),
+    schema: z.object({
+        email: z.string(),
+        phone: z.string(),
+        location: z.string(),
+    }),
+});
+
+const boardsObjectives = defineCollection({
+    loader: glob({pattern: '*.mdx', base: './src/content/boards/objectives'}),
+    schema: z.object({
+        title: z.string(),
+    }),
 });
 
 // 5. Export a single `collections` object to register your collection(s)
-export const collections = { resume };
+export const collections = {resume, boardsObjectives};

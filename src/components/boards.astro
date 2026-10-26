@@ -1,0 +1,21 @@
+---
+import {getCollection, render} from 'astro:content';
+import {cn} from 'cn';
+
+const allBoardsObjectives = await getCollection('boardsObjectives');
+const entries = await Promise.all(allBoardsObjectives.map(async (boardObjective) => ({
+    render: await render(boardObjective),
+    ...boardObjective,
+})));
+---
+
+<div>
+    <p>In order for me to graduate from the University of Advancing Technology I <b><i>MUST</i></b> reach the following
+        6 objectives:</p>
+    {entries.map((entry) => (
+        <div class={cn("prose-no-container p-2", entry.id !== "6" && "border-border border-b-2")}>
+            <h3>{entry.data.title}</h3>
+            <entry.render.Content/>
+        </div>
+    ))}
+</div>

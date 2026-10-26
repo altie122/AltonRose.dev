@@ -5,18 +5,12 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import vercel from "@astrojs/vercel";
-
 import db from "@astrojs/db";
-
-import pdf from "astro-pdf";
 
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
   site: "https://altonrose.dev",
-  server: {
-    allowedHosts: ["astrodev.altonrose.dev"],
-  },
   vite: {
     plugins: [tailwindcss()],
   },
@@ -27,11 +21,6 @@ export default defineConfig({
     }),
     mdx(),
     db(),
-    pdf({
-      pages: {
-        "/resume/": "/resume.pdf",
-      },
-    }),
   ],
   adapter: vercel(),
   output: "server",

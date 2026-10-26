@@ -1,176 +1,180 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import * as Card from "@/components/ui/card";
-import { ProjectCard } from "@/components/project-card";
-import { projects, shuffleArray } from "@/lib";
-import FirefoxNotice from "@/components/firefox-notice";
-import { getEntry, render } from "astro:content";
+import Layout from '@/layouts/Layout.astro';
+import * as Card from '@/components/ui/card';
+import {ProjectCard} from '@/components/project-card';
+import {projects, shuffleArray} from '@/lib';
+import FirefoxNotice from '@/components/firefox-notice';
+import {getEntry, render} from 'astro:content';
+import Boards from '@/components/boards.astro';
 
-const entry = await getEntry("resume", "resume");
+const entry = await getEntry('resume', "resume");
 
 if (!entry) {
-  return new Response("Not found", {
-    status: 404,
-    headers: { "content-type": "text/plain" },
-  });
+    return new Response('Not found', {
+        status: 404,
+        headers: {'content-type': 'text/plain'},
+    });
 }
-const { Content } = await render(entry);
+const {Content} = await render(entry);
 const randomProjects = shuffleArray(projects).slice(0, 2);
 ---
 
 <Layout>
-  <section
-    class='flex flex-col items-center justify-center min-h-screen w-full'
-  >
-    <h1 class='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
-      Hello, I'm Alton Rose!
-    </h1>
-    <p class='text-xs'>Also known as altie122 online.</p>
-    <p>I'm a Senior in High School who is trying to make cool stuff!</p>
-    <FirefoxNotice client:only="react" />
-  </section>
-  <section class='min-h-screen w-full p-4'>
-    <h1 class='prose-h1'>About Me</h1>
-    <div class='flex flex-col md:flex-row gap-4'>
-      <div class='w-full'>
-        <p>
-          I'm an 18 year old who loves cats and is trying to learn as much about
-          development of all kinds as I can.
-        </p>
-        <p>
-          Currently I consider myself proficient in the following technologies:
-        </p>
-        <Card.Card className='w-fit ml-4'>
-          <Card.CardContent>
-            <ul class='list-disc list-inside'>
-              <li>HTML</li>
-              <li>Typescript/JavaScript</li>
-              <li>React</li>
-            </ul>
-            <h2 class='prose-h2-noborder'>Web Frameworks:</h2>
-            <ul class='list-disc list-inside'>
-              <li>Astro</li>
-              <li>NextJS</li>
-            </ul>
-          </Card.CardContent>
-        </Card.Card>
-        <p>I'm currently learning the following:</p>
-        <Card.Card className='w-fit ml-4'>
-          <Card.CardContent>
-            <ul class='list-disc list-inside'>
-              <li>React Native (using Expo)</li>
-              <li>CSS</li>
-              <li>Python</li>
-              <li>Lua(u)</li>
-              <li>Rust</li>
-              <li>Java</li>
-              <li>C++</li>
-              <li>C#</li>
-              <li>Video game development (using UE 5)</li>
-            </ul>
-          </Card.CardContent>
-        </Card.Card>
-        <h2 class='prose-h2-noborder'>What I do other than programming.</h2>
-        <p>
-          Along with programming I play video games, streaming (on twitch under
-          the name <em
-            ><a href='https://twitch.tv/altie122' class='prose-a'>altie122</a
-            ></em
-          >), and a few other things that are less significant to me.
-        </p>
-        <h2 class='prose-h2-noborder'>Check out some of my socials!</h2>
-        <Card.Card className='w-fit ml-4'>
-          <Card.CardContent>
-            <ul class='list-disc list-inside'>
-              <li>
-                <a
-                  href='https://twitch.tv/altie122'
-                  class='prose-a'
-                  target='_blank'>Twitch</a>
-              </li>
-              <li>
-                <a
-                  href='https://www.youtube.com/@altie122'
-                  class='prose-a'
-                  target='_blank'>YouTube</a>
-              </li>
-              <li>
-                <a
-                  href='https://github.com/altie122'
-                  class='prose-a'
-                  target='_blank'>GitHub</a>
-              </li>
-            </ul>
-          </Card.CardContent>
-        </Card.Card>
-      </div>
-<div>
-<h2 class="text-2xl font-bold">Licenses and Certifications</h2>
-<ul class="list-disc list-inside">
-  <li>FAA Part 107 Remote Pilot Certificate</li>
-  <li>Microsoft Word 2019 Certification</li>
-  <li>Customer Service Gold Certification</li>
-</ul>
-</div>
-    </div>
-  </section>
-  <section class='min-h-screen w-full p-4 overflow-x-hidden'>
-    <h1 class='text-4xl font-bold'>Projects</h1>
-    <p>I've made a few projects, some of which are listed below:</p>
-    <div class='grid grid-cols-1 lg:grid-cols-2 gap-2 p-2'>
-      {
-        randomProjects.map((project) => (
-          <ProjectCard project={project} from='home' client:only />
-        ))
-      }
-    </div>
-    {
-      projects.length !== randomProjects.length && (
-        <p>
-          You can view all of my projects on my{" "}
-          <a href='/portfolio' class='prose-a'>
-            portfolio page
-          </a>
-          .
-        </p>
-      )
-    }
-  </section>
-  <!-- <section className="min-h-screen min-w-full p-4">
-    <h1 className="text-4xl font-bold">Blog</h1>
-    <p>I try to write blog posts every now and then, here are a few of my most recent ones:</p>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      {blogPosts.map((post) => (
-        <h1>{post.title}</h1>
-      ))}
-    </div>
-    <p>You can view all of my blog posts on my <a href="/blog" className="no-underline hover:underline">blog page</a>.</p>
-  </section> -->
-  <section class="min-h-screen min-w-full p-4">
-    <h1 class="text-4xl font-bold">Resume</h1>
-      <main class='w-full lg:w-1/2 mx-auto border-2 border-border bg-black mt-2'>
-    <div class='flex flex-col items-center p-2'>
-      <h1 class='text-4xl font-bold pb-2'>Alton Rose</h1>
-      <p>
-        Email: <a href={`mailto:${entry.data.email}`} class='prose-a'
-          >{entry.data.email}</a
-        >
-      </p>
-      <p>Phone: {entry.data.phone}</p>
-      <p>Location: {entry.data.location}</p>
-    </div>
-    <hr class='border-2 border-border' />
-    <div class='prose-no-container'>
-      <Content />
-    </div>
-  </main>
-  <div class='p-2 flex justify-center'>
-    <p>
-      A Printable PDF of my resume can be found: <a
-        href='/resume/print.pdf'
-        class='prose-a'>here</a
-      >.
-    </p>
-  </div>
-  </section>
+    <main class="container mx-auto">
+        <section class="flex flex-col items-center justify-center min-h-screen w-full">
+            <h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+                Hello, I'm Alton Rose!
+            </h1>
+            <p class="text-xs">Also known as altie122 online.</p>
+            <p>I'm a college student who is trying to make cool stuff!</p>
+            <FirefoxNotice client:only="react"/>
+        </section>
+        <section class="min-h-screen w-full p-4">
+            <h1 class="prose-h1">About Me</h1>
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="w-full">
+                    <p>
+                        I'm an 18 year old who loves cats and is trying to learn as much about
+                        development of all kinds as I can.
+                    </p>
+                    <p>
+                        Currently I consider myself proficient in the following technologies:
+                    </p>
+                    <Card.Card className="w-fit ml-4">
+                        <Card.CardContent>
+                            <ul class="list-disc list-inside">
+                                <li>HTML</li>
+                                <li>Typescript/JavaScript</li>
+                                <li>React</li>
+                            </ul>
+                            <h2 class="prose-h2-noborder">Web Frameworks:</h2>
+                            <ul class="list-disc list-inside">
+                                <li>Astro</li>
+                                <li>NextJS</li>
+                            </ul>
+                        </Card.CardContent>
+                    </Card.Card>
+                    <p>I'm currently learning the following:</p>
+                    <Card.Card className="w-fit ml-4">
+                        <Card.CardContent>
+                            <ul class="list-disc list-inside">
+                                <li>React Native (using Expo)</li>
+                                <li>CSS</li>
+                                <li>Python</li>
+                                <li>Lua(u)</li>
+                                <li>Rust</li>
+                                <li>Java</li>
+                                <li>C++</li>
+                                <li>C#</li>
+                                <li>Video game development (using UE 5)</li>
+                            </ul>
+                        </Card.CardContent>
+                    </Card.Card>
+                    <h2 class="prose-h2-noborder">What I do other than programming.</h2>
+                    <p>
+                        Along with programming I play video games, streaming (on twitch under
+                        the name <em
+                    ><a href="https://twitch.tv/altie122" class="prose-a">altie122</a
+                    ></em
+                    >), and a few other things that are less significant to me.
+                    </p>
+                    <h2 class="prose-h2-noborder">Check out some of my socials!</h2>
+                    <Card.Card className="w-fit ml-4">
+                        <Card.CardContent>
+                            <ul class="list-disc list-inside">
+                                <li>
+                                    <a
+                                            href="https://twitch.tv/altie122"
+                                            class="prose-a"
+                                            target="_blank">Twitch</a>
+                                </li>
+                                <li>
+                                    <a
+                                            href="https://www.youtube.com/@altie122"
+                                            class="prose-a"
+                                            target="_blank">YouTube</a>
+                                </li>
+                                <li>
+                                    <a
+                                            href="https://github.com/altie122"
+                                            class="prose-a"
+                                            target="_blank">GitHub</a>
+                                </li>
+                            </ul>
+                        </Card.CardContent>
+                    </Card.Card>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold">Licenses and Certifications</h2>
+                    <ul class="list-disc list-inside">
+                        <li>FAA Part 107 Remote Pilot Certificate</li>
+                        <li>Microsoft Word 2019 Certification</li>
+                        <li>Customer Service Gold Certification</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="min-h-screen w-full p-4 overflow-x-hidden">
+            <h1 class="text-4xl font-bold">Projects</h1>
+            <p>I've made a few projects, some of which are listed below:</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 p-2">
+                {
+                    randomProjects.map((project) => (
+                            <ProjectCard project={project} from="home" client:only="react"/>
+                    ))
+                }
+            </div>
+            {
+                projects.length !== randomProjects.length && (
+                            <p>
+                                You can view all of my projects on my{' '}
+                                <a href="/portfolio" class="prose-a">
+                                    portfolio page
+                                </a>
+                                .
+                            </p>
+                )
+            }
+        </section>
+        <!-- <section className="min-h-screen min-w-full p-4">
+          <h1 className="text-4xl font-bold">Blog</h1>
+          <p>I try to write blog posts every now and then, here are a few of my most recent ones:</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+            {blogPosts.map((post) => (
+              <h1>{post.title}</h1>
+            ))}
+          </div>
+          <p>You can view all of my blog posts on my <a href="/blog" className="no-underline hover:underline">blog page</a>.</p>
+        </section> -->
+        <section class="min-h-screen min-w-full p-4">
+            <h1 class="text-4xl font-bold">Resume</h1>
+            <main class="w-full mx-auto border-2 border-border bg-black mt-2">
+                <div class="flex flex-col items-center p-2">
+                    <h1 class="text-4xl font-bold pb-2">Alton Rose</h1>
+                    <p>
+                        Email: <a href={`mailto:${entry.data.email}`} class="prose-a"
+                    >{entry.data.email}</a
+                    >
+                    </p>
+                    <p>Phone: {entry.data.phone}</p>
+                    <p>Location: {entry.data.location}</p>
+                </div>
+                <hr class="border-2 border-border"/>
+                <div class="prose-no-container">
+                    <Content/>
+                </div>
+            </main>
+            <div class="p-2 flex justify-center">
+                <p>
+                    A Printable PDF of my resume can be found: <a href="/resume/alton-rose-resume.pdf" class="prose-a">here</a>.
+                </p>
+            </div>
+        </section>
+        <section class="min-h-screen min-w-full p-4">
+            <h1 class="text-4xl font-bold">Boards</h1>
+            <div class="w-full mx-auto border-2 border-border bg-black mt-2 p-2">
+                <Boards/>
+            </div>
+        </section>
+    </main>
 </Layout>
