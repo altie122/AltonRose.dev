@@ -1,19 +1,23 @@
 import type { APIRoute } from "astro";
-import { chromium } from "playwright";
+import chromium from "@sparticuz/chromium";
+import { chromium as playwright } from "playwright-core";
 
 export const prerender = false;
 
 export const GET: APIRoute = async ({ request }) => {
-    let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
+    let browser: Awaited<ReturnType<typeof playwright.launch>> | undefined;
 
     try {
-        browser = await chromium.launch({ headless: true });
+        browser = await playwright.launch({
+            args: chromium.args,
+            executablePath: await chromium.executablePath(),
+            headless: true,
+        });
 
         const page = await browser.newPage({
             viewport: { width: 1280, height: 1000 },
         });
 
-        // Open the actual Astro page, so its rendered content and CSS are used.
         const resumeUrl = new URL("/resume", request.url);
         const pageResponse = await page.goto(resumeUrl.href, {
             waitUntil: "networkidle",
@@ -26,11 +30,8 @@ export const GET: APIRoute = async ({ request }) => {
             });
         }
 
-        // Wait for web fonts before printing.
         await page.evaluate(() => document.fonts.ready);
 
-        // Print-specific adjustments: use the printable page width instead of
-        // the screen's lg:w-1/2 width, while keeping the page's existing styles.
         await page.addStyleTag({
             content: `
         @page {
