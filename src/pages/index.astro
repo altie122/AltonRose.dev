@@ -7,7 +7,7 @@ import FirefoxNotice from '@/components/firefox-notice';
 import {getEntry, render} from 'astro:content';
 import Boards from '@/components/boards.astro';
 
-const entry = await getEntry('resume', "resume");
+const entry = await getEntry('resume', 'resume');
 
 if (!entry) {
     return new Response('Not found', {
@@ -26,7 +26,7 @@ const randomProjects = shuffleArray(projects).slice(0, 2);
                 Hello, I'm Alton Rose!
             </h1>
             <p class="text-xs">Also known as altie122 online.</p>
-            <p>I'm a college student who is trying to make cool stuff!</p>
+            <p>I'm a video game and web developer who is trying to make cool stuff!</p>
             <FirefoxNotice client:only="react"/>
         </section>
         <section class="min-h-screen w-full p-4">
@@ -37,26 +37,23 @@ const randomProjects = shuffleArray(projects).slice(0, 2);
                         I'm an 18 year old who loves cats and is trying to learn as much about
                         development of all kinds as I can.
                     </p>
-                    <p>
-                        Currently I consider myself proficient in the following technologies:
-                    </p>
                     <Card.Card className="w-fit ml-4">
                         <Card.CardContent>
+                            <h2 class="prose-h2-noborder">
+                                Technologies I'm currently working with:
+                            </h2>
                             <ul class="list-disc list-inside">
                                 <li>HTML</li>
                                 <li>Typescript/JavaScript</li>
                                 <li>React</li>
                             </ul>
-                            <h2 class="prose-h2-noborder">Web Frameworks:</h2>
+                            <h3 class="prose-h3-noborder">Web Frameworks:</h3>
                             <ul class="list-disc list-inside">
                                 <li>Astro</li>
                                 <li>NextJS</li>
                             </ul>
-                        </Card.CardContent>
-                    </Card.Card>
-                    <p>I'm currently learning the following:</p>
-                    <Card.Card className="w-fit ml-4">
-                        <Card.CardContent>
+
+                            <h2 class="prose-h2-noborder">I'm currently learning the following:</h2>
                             <ul class="list-disc list-inside">
                                 <li>Video game development (using UE 5 and Unity)</li>
                                 <li>React Native (using Expo)</li>
@@ -68,19 +65,15 @@ const randomProjects = shuffleArray(projects).slice(0, 2);
                                 <li>C++</li>
                                 <li>C#</li>
                             </ul>
-                        </Card.CardContent>
-                    </Card.Card>
-                    <h2 class="prose-h2-noborder">What I do other than programming.</h2>
-                    <p>
-                        Along with programming I play video games, streaming (on twitch under
-                        the name <em
-                    ><a href="https://twitch.tv/altie122" class="prose-a">altie122</a
-                    ></em
-                    >), and a few other things that are less significant to me.
-                    </p>
-                    <h2 class="prose-h2-noborder">Check out some of my socials!</h2>
-                    <Card.Card className="w-fit ml-4">
-                        <Card.CardContent>
+                            <h2 class="prose-h2-noborder">What I do other than programming.</h2>
+                            <p>
+                                Along with programming I play video games, streaming (on twitch under
+                                the name <em
+                            ><a href="https://twitch.tv/altie122" class="prose-a">altie122</a
+                            ></em
+                            >), and a few other things that are less significant to me.
+                            </p>
+                            <h2 class="prose-h2-noborder">Check out some of my socials!</h2>
                             <ul class="list-disc list-inside">
                                 <li>
                                     <a
@@ -105,12 +98,16 @@ const randomProjects = shuffleArray(projects).slice(0, 2);
                     </Card.Card>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-bold">Licenses and Certifications</h2>
-                    <ul class="list-disc list-inside">
-                        <li>FAA Part 107 Remote Pilot Certificate</li>
-                        <li>Microsoft Word 2019 Certification</li>
-                        <li>Customer Service Gold Certification</li>
-                    </ul>
+                    <Card.Card className="w-fit ml-4">
+                        <Card.CardContent>
+                            <h2 class="text-2xl font-bold">Licenses and Certifications</h2>
+                            <ul class="list-disc list-inside">
+                                <li>FAA Part 107 Remote Pilot Certificate</li>
+                                <li>Microsoft Word 2019 Certification</li>
+                                <li>Customer Service Gold Certification</li>
+                            </ul>
+                        </Card.CardContent>
+                    </Card.Card>
                 </div>
             </div>
         </section>
