@@ -10,7 +10,7 @@ const entries = await Promise.all(allBoardsObjectives.map(async (boardObjective)
 ---
 
 <div>
-    <p>In order for me to graduate from the University of Advancing Technology I <b><i>MUST</i></b> reach the following
+    <p>In order for me to graduate from the University of Advancing Technology with my game programming degree I <b><i>MUST</i></b> reach, and provide proof of reaching, the following
         6 objectives:</p>
     {entries.map((entry) => (
         <div class={cn("prose-no-container p-2", entry.id !== "6" && "border-border border-b-2")}>
