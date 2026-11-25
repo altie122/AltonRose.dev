@@ -76,7 +76,10 @@ export function ReducedMotionDialog() {
           <AlertDialog.AlertDialogAction asChild>
             <Button
               variant={"outline"}
-              onClick={() => setPrefersReducedMotion("no-motion")}
+              onClick={() => {
+                  setPrefersReducedMotion('no-motion');
+                  window.location.reload();
+              }}
             >
               No Motion
             </Button>
@@ -84,7 +87,10 @@ export function ReducedMotionDialog() {
           <AlertDialog.AlertDialogAction asChild>
             <Button
               variant={"outline"}
-              onClick={() => setPrefersReducedMotion("less-motion")}
+              onClick={() => {
+                  setPrefersReducedMotion('less-motion');
+                  window.location.reload();
+              }}
             >
               Less Motion
             </Button>
@@ -92,7 +98,10 @@ export function ReducedMotionDialog() {
           <AlertDialog.AlertDialogAction asChild>
             <Button
               variant={"outline"}
-              onClick={() => setPrefersReducedMotion("all-the-motion")}
+              onClick={() => {
+                  setPrefersReducedMotion('all-the-motion');
+                  window.location.reload();
+              }}
             >
               All the Motion
             </Button>
